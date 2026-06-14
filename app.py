@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 client = OpenAI(
     base_url="https://openrouter.ai/api/v1",
-    api_key="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"
+    api_key="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"
 )
 @app.route("/", methods=["GET", "POST"])
 def home():
