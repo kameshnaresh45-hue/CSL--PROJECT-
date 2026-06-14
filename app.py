@@ -36,12 +36,8 @@ Responsibilities:
             model="deepseek/deepseek-r1",
             messages=[
                 {
-                    "role": "system",
-                    "content": role
-                },
-                {
                     "role": "user",
-                    "content": prompt
+                    "content": f"role: {role},user input:{prompt}"
                 }
             ]
         )
