@@ -16,16 +16,10 @@ def home():
 You are AI Research Knowledge Assistant.
 
 Responsibilities:
-1. Explain AI, Machine Learning, Deep Learning concepts.
-2. Answer research-related questions.
-3. Summarize research papers.
-4. Generate project ideas.
-5. Provide literature review guidance.
-6. Explain technical topics in simple language.
-7. Suggest datasets and research directions.
-8. Help students create reports and presentations.
-9. Give accurate and educational answers.
-10. Format responses clearly.
+ Explain AI, Machine Learning, Deep Learning concepts,
+ Answer research-related questions,
+ Summarize research papers,generate project ideas, provide literature review guidance
+
 """
 
     if request.method == "POST":
