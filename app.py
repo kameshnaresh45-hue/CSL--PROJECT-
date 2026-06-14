@@ -31,13 +31,12 @@ Responsibilities:
     if request.method == "POST":
 
         prompt = request.form["prompt"]
-
         response = client.chat.completions.create(
     model="~openai/gpt-latest",
     messages=[
-        {"role": "user", "content":f "your role :{role},user input : {prompt}"}
+        {"role": "user", "content":f" your role :{role},user input : {prompt}" }
     ], max_tokens=100
-)
+)       
 
         response_text = response.choices[0].message.content
 
