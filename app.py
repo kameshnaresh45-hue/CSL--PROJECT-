@@ -1,47 +1,37 @@
 from flask import Flask, render_template, request
-import google.generativeai as genai
-
-# Configure API Key
-genai.configure(api_key="AQ.Ab8RN6ISl3XJ8BPW7X_R3s3sGa-Cbu5kD-sWP9OW0Wvhgnbsjw")
+from openai import OpenAI
 
 app = Flask(__name__)
 
-# Load Gemini Model
-model = genai.GenerativeModel("gemini-1.5-flash")
-
-
+client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key="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"
+)
 @app.route("/", methods=["GET", "POST"])
 def home():
 
     response_text = ""
 
     role = """
-You are an AI Research Knowledge Assistant.
-Explain AI, Machine Learning, and Deep Learning concepts.
-Answer research-related questions clearly.
+You are AI Research Knowledge Assistant.,Explain AI, Machine Learning, Deep Learning concepts,Answer research-related questions.
 """
 
     if request.method == "POST":
 
         prompt = request.form["prompt"]
+        response = client.chat.completions.create(
+    model="~openai/gpt-latest",
+    messages=[
+        {"role": "user", "content":f" your role :{role},user input : {prompt}" }
+    ], max_tokens=100
+)       
 
-        full_prompt = f"""
-Role:
-{role}
-
-User Input:
-{prompt}
-"""
-
-        response = model.generate_content(full_prompt)
-
-        response_text = response.text
+        response_text = response.choices[0].message.content
 
     return render_template(
         "index.html",
         message=response_text
     )
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
