@@ -1,11 +1,8 @@
 from flask import Flask, render_template, request
-from openai import OpenAI
-
+from google import genai
 app = Flask(__name__)
+client = genai.Client(api_key="AQ.Ab8RN6LKqXfyQ4ypOooSOOvg8x8rHBYvRcOl0ITa-tK63y-EKg")
 
-client = OpenAI(
-    base_url="https://openrouter.ai/api/v1",
-    api_key="sk-or-v1-9a039ba45c13eca464dff25ccdf7a790245d143b2d9e8e26b9807>")
 @app.route("/", methods=["GET", "POST"])
 def home():
 
@@ -18,14 +15,13 @@ You are AI Research Knowledge Assistant.,Explain AI, Machine Learning, Deep Lear
     if request.method == "POST":
 
         prompt = request.form["prompt"]
-        response = client.chat.completions.create(
-    model="~openai/gpt-latest",
-    messages=[
-        {"role": "user", "content":f" your role :{role},user input : {prompt}" }
-    ], max_tokens=100
-)       
+        response = client.models.generate_content(
+    model="gemini-2.5-flash",
+    contents=f" your role :{role},user input : {prompt}"
+)
+     
 
-        response_text = response.choices[0].message.content
+        response_text = response.text
 
     return render_template(
         "index.html",
@@ -33,4 +29,4 @@ You are AI Research Knowledge Assistant.,Explain AI, Machine Learning, Deep Lear
     )
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0", port=5000, debug=True)
